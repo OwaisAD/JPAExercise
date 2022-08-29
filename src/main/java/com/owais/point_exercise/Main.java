@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         // Open a database connection
         // (create a new database if it doesn't exist yet):
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu"); //svarer lidt til Connectionpool vi brugte på andet semester
         EntityManager em = emf.createEntityManager();
 
         // Store 1000 Point objects in the database:
@@ -25,7 +25,7 @@ public class Main {
         System.out.println("Total Points: " + q1.getSingleResult());
 
         // Find the average X value:
-        Query q2 = em.createQuery("SELECT AVG(p.x) FROM Point p");
+        Query q2 = em.createQuery("SELECT AVG(p.x) FROM Point p"); //virker fordi vi har getX()
         System.out.println("Average X: " + q2.getSingleResult());
 
         // Retrieve all the Point objects from the database:
