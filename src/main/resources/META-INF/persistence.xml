@@ -11,7 +11,7 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/point?serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="dev"/>
             <property name="javax.persistence.jdbc.password" value="ax2"/>
-            <property name="javax.persistence.schema-generation.database.action" value="create"/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <!--value="create" betyder, hvis tabellen ikke findes så opret den, der findes også en der hedder drop-and-create som sletter og opretter tabellen-->
         </properties>
     </persistence-unit>

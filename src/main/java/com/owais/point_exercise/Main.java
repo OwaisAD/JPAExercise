@@ -1,24 +1,22 @@
 package com.owais.point_exercise;
 
 import com.owais.point_exercise.entities.Point;
+import com.owais.point_exercise.facades.PointFacade;
 
 import javax.persistence.*;
 import java.util.*;
 
 public class Main {
+    private static PointFacade pointFacade;
     public static void main(String[] args) {
         // Open a database connection
         // (create a new database if it doesn't exist yet):
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu"); //svarer lidt til Connectionpool vi brugte på andet semester
+        pointFacade = PointFacade.getInstance(emf);
+
         EntityManager em = emf.createEntityManager();
 
-        // Store 1000 Point objects in the database:
-        em.getTransaction().begin();
-        for (int i = 0; i < 1000; i++) {
-            Point p = new Point(i, i);
-            em.persist(p);
-        }
-        em.getTransaction().commit();
+        pointFacade.persistPoints(1000);
 
         // Find the number of Point objects in the database:
         Query q1 = em.createQuery("SELECT COUNT(p) FROM Point p");
