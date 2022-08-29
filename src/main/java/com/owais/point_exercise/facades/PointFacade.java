@@ -2,9 +2,8 @@ package com.owais.point_exercise.facades;
 
 import com.owais.point_exercise.entities.Point;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * *singleton*
@@ -43,4 +42,39 @@ public class PointFacade {
         em.close();
     }
 
+    public long findNumberOfPoints() {
+        // Find the number of Point objects in the database:
+        EntityManager em = emf.createEntityManager();
+        Query q1 = em.createQuery("SELECT COUNT(p) FROM Point p");
+        long result = (long) q1.getSingleResult();
+        em.close();
+        return result;
+    }
+
+    public double averageX() {
+        // Find the average X value:
+        EntityManager em = emf.createEntityManager();
+        Query q2 = em.createQuery("SELECT AVG(p.x) FROM Point p"); //virker fordi vi har getX()
+        double result = (double) q2.getSingleResult();
+        em.close();
+        return result;
+    }
+
+    public double averageY() {
+        // Find the average Y value:
+        EntityManager em = emf.createEntityManager();
+        Query q2 = em.createQuery("SELECT AVG(p.y) FROM Point p"); //virker fordi vi har getY()
+        double result = (double) q2.getSingleResult();
+        em.close();
+        return result;
+    }
+
+    public List<Point> retrieveAllPoints() {
+        // Retrieve all the Point objects from the database:
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Point> query = em.createQuery("SELECT p FROM Point p", Point.class);
+        List<Point> results = query.getResultList();
+        em.close();
+        return results;
+    }
 }

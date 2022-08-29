@@ -14,27 +14,30 @@ public class Main {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu"); //svarer lidt til Connectionpool vi brugte på andet semester
         pointFacade = PointFacade.getInstance(emf);
 
-        EntityManager em = emf.createEntityManager();
 
+        // Store X amount of Point objects in the database:
         pointFacade.persistPoints(1000);
 
         // Find the number of Point objects in the database:
-        Query q1 = em.createQuery("SELECT COUNT(p) FROM Point p");
-        System.out.println("Total Points: " + q1.getSingleResult());
+        long numberOfPoints = pointFacade.findNumberOfPoints();
+        System.out.println("Number of points: " + numberOfPoints);
 
-        // Find the average X value:
-        Query q2 = em.createQuery("SELECT AVG(p.x) FROM Point p"); //virker fordi vi har getX()
-        System.out.println("Average X: " + q2.getSingleResult());
+        // Average X value
+        double avgX = pointFacade.averageX();
+        System.out.println("Average X: " + avgX);
+
+        // Average Y value
+        double avgY = pointFacade.averageY();
+        System.out.println("Average Y: " + avgY);
 
         // Retrieve all the Point objects from the database:
-        TypedQuery<Point> query = em.createQuery("SELECT p FROM Point p", Point.class);
-        List<Point> results = query.getResultList();
-        for (Point p : results) {
+        List<Point> listOfAllPoints = pointFacade.retrieveAllPoints();
+        System.out.println("------------------\nList of all points:");
+        for (Point p : listOfAllPoints) {
             System.out.println(p);
         }
 
         // Close the database connection:
-        em.close();
         emf.close();
     }
 }
