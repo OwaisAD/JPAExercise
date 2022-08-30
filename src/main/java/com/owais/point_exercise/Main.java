@@ -14,7 +14,6 @@ public class Main {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu"); //svarer lidt til Connectionpool vi brugte på andet semester
         pointFacade = PointFacade.getInstance(emf);
 
-
         // Store X amount of Point objects in the database:
         pointFacade.persistPoints(1000);
 
